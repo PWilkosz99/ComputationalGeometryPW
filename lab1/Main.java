@@ -5,19 +5,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        // Ustawinie ilości punktów łączących linie
-        Generator gen = new Generator(100);
-        // Wierzchołki
-        gen.tenPoints(4);
-        // Kontur między  wierzchołkami
-        gen.outlines();
-        // Kontur ze środkiem
-        gen.outlinesToCenter();
+        Generator gen = new Generator(1000); //argument: precyzja
+                
+        gen.makeCone(1,3); //argumenty: promien podstawy, wysokosc.
 
-        // Zapis do pliku
-        gen.saveFile("out1.txt");
 
-        // Uruchomienie 
-        new ProcessBuilder("C:\\Program Files\\VCG\\MeshLab\\meshlab.exe", "out1.txt").start();
+        gen.saveFile("output1.txt");//zapis do pliku
+
+        new ProcessBuilder("D:\\Program Files\\VCG\\MeshLab\\meshlab.exe", "output1.txt").start();//przekierowanie danych do meshlaba
     }
 }
