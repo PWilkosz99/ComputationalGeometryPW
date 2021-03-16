@@ -13,7 +13,7 @@ public class Main {
         Calculate.translation(line, new Vector(2, 2));
 
         System.out.println("\nZadanie 5:");
-        Calculate.rotate(new Point(2,2), 360); //kat w radianach
+        Calculate.rotate(new Point(2,2), Math.PI); //kat w radianach
 
         System.out.println("\nZadanie 6:");
         Calculate.mirrorXY(new Point(2,2));
