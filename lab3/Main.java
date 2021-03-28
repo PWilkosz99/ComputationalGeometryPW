@@ -8,7 +8,7 @@ public class Main {
         Calculate.whichSide(new Line(new Point(1, 1), new Point(2, 5)), new Point(-1, 3));
         System.out.println("\nDla lini (1,1), (2,5) i punktu (5,3):");
         Calculate.whichSide(new Line(new Point(1, 1), new Point(2, 5)), new Point(5, 3));
-        System.out.println("\nDla lini (1,1), (2,5) i punktu (3,4):");
+        System.out.println("\nDla lini (1,1), (3,3) i punktu (4,4):");
         Calculate.whichSide(new Line(new Point(1, 1), new Point(3, 3)), new Point(4, 4));
 
         // 2

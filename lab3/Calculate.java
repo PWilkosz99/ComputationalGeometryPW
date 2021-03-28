@@ -1,7 +1,9 @@
 public class Calculate {
    static void whichSide(Line l1, Point p3) {
       LineEquation eq = new LineEquation(l1);
-      double res = eq.A * p3.x + eq.B * p3.y + eq.C;
+      // double res = eq.A * p3.x + eq.B * p3.y + eq.C;
+      eq.B = 1.0;//mam tylko A i B -> C
+      double res = -1 * eq.A * p3.x + eq.B * p3.y - eq.C;
       if (res < -0.3) {
          System.out.println("Punkt z „lewej” strony prostej");
       } else if (res > 0.3) {
@@ -18,7 +20,7 @@ public class Calculate {
       double x = Wx / W;
       double y = Wy / W;
       System.out.println("Punkt przeciecia to:");
-      System.out.println("x = "+x+" y= "+y);
+      System.out.println("x = " + x + " y= " + y);
       LineEquation L1 = new LineEquation(A1, B1, C1);
       LineEquation L2 = new LineEquation(A2, B2, C2);
       System.out.println("Równanie linia 1:");
