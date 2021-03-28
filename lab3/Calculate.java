@@ -17,7 +17,14 @@ public class Calculate {
       double Wy = (A1 * (-C2)) - ((-C1) * A2);
       double x = Wx / W;
       double y = Wy / W;
-      System.out.println("X: " + x + " y:" + y);
+      System.out.println("Punkt przeciecia to:");
+      System.out.println("x = "+x+" y= "+y);
+      LineEquation L1 = new LineEquation(A1, B1, C1);
+      LineEquation L2 = new LineEquation(A2, B2, C2);
+      System.out.println("Równanie linia 1:");
+      L1.printYeq();
+      System.out.println("Równanie linia 2:");
+      L2.printYeq();
    }
 
    static double trangleArea(Point p1, Point p2, Point p3) {
