@@ -12,6 +12,7 @@ public class Main {
         Calculate.whichSide(new Line(new Point(1, 1), new Point(3, 3)), new Point(4, 4));
 
         // 2
+        System.out.println("\nZAD 2: Punkt przeciecia 2 linii:\n");
         System.out.println("\nDla A1 = 2, B1 = 4, C1 = 5 oraz A2 = 2, B2 = 3, C2 = 7 : \n");
         Calculate.crossingPointCramer(2, 4, 5, 2, 3, 7);
 
