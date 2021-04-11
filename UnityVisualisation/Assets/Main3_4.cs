@@ -36,6 +36,7 @@ public class Main3_4 : MonoBehaviour
     }
     Circle a;
     Line l;
+
     private void Start()
     {
         a = gameObject.AddComponent<Circle>();
@@ -47,9 +48,10 @@ public class Main3_4 : MonoBehaviour
         var A = MakePoint(-1, 0);
         var B = MakePoint(1, 0);
 
+
         l = MakeDirectLine(A, B);
 
-        print(a.LineTouch(l));
+        print(a.LineTouch2(l));
 
     }
     int count = 0;
@@ -58,7 +60,7 @@ public class Main3_4 : MonoBehaviour
         count++;
         if(count % 30 == 29)
         {
-            print(a.LineTouch(l));
+            print(a.LineTouch2(l));
 
         }
     }

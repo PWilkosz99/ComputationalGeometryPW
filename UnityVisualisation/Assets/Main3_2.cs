@@ -54,9 +54,9 @@ public class Main3_2 : MonoBehaviour
         //print(tr.B.Length());
         //print(tr.C.Length());
         //print(tr.ComputeArea());
-        //print("A " + tr.A.whichSide(p));
-        //print("B " + tr.B.whichSide(p));
-        //print("C " + tr.C.whichSide(p));
+        print("A " + tr.A.whichSide(p));
+        print("B " + tr.B.whichSide(p));
+        print("C " + tr.C.whichSide(p));
         print(tr.IsInside(p));
         //print(tr.pDebug());
     }

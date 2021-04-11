@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,10 @@ public class Line :MonoBehaviour
 {
     protected LineRenderer LineRendererObj;
     double error = 0.5;
+
+    public Point2D A => tail;
+    public Point2D B => head;
+
 
     public enum EquationABC {
         A,
@@ -18,8 +23,13 @@ public class Line :MonoBehaviour
         A,
         B,
     }
-
-    public void PassArgs(Point2D head, Point2D tail, Material material)
+    /// <summary>
+    /// A |------> B
+    /// </summary>
+    /// <param name="tail">A Punkt zaczepienia, początek</param>
+    /// <param name="head">B Zwrot, koniec</param>
+    /// <param name="material">Materiał z inspektora</param>
+    public void PassArgs(Point2D tail, Point2D head, Material material)
     {
         this.head = head;
         this.tail = tail;
@@ -31,7 +41,7 @@ public class Line :MonoBehaviour
     public Line Clone(GameObject GameObjectParm)
     {
         var resp = GameObjectParm.AddComponent<Line>();        
-        resp.PassArgs(head.Clone(GameObjectParm), tail.Clone(GameObjectParm), Material);
+        resp.PassArgs( tail.Clone(GameObjectParm), head.Clone(GameObjectParm), Material);
         return resp;
     }
 
@@ -42,9 +52,13 @@ public class Line :MonoBehaviour
 
     public Dictionary<EquationAB, Double> lineEquation() {
         var ans = new Dictionary<EquationAB, Double>();
-        double a = (head.Y - tail.Y) / (head.X - tail.X);
+        if(A.X == B.X)
+        {
+            throw new LineIsNotFunctionException(this);
+        }
+        double a = (A.Y - B.Y) / (A.X - B.X);
         ans.Add(EquationAB.A, a);
-        ans.Add(EquationAB.B, head.Y - a * head.X);
+        ans.Add(EquationAB.B, A.Y - a * A.X);
         return ans;
     }
 
@@ -100,57 +114,26 @@ public class Line :MonoBehaviour
         return res;
     }
 
-    //public Side whichSide(Point2D point, int ttt)
-    //{
-    //    var ab =lineEquationGeneral();
-    //    var res = ab[EquationABC.A]*point.X + ab[EquationABC.B]*point.Y+ ab[EquationABC.C];
+    public Side whichSide2(Point2D point)
+    {
+        throw new Exception("Not working");
+        var ab = lineEquationGeneral();
+        var res = ab[EquationABC.A] * point.X + ab[EquationABC.B] * point.Y + ab[EquationABC.C];
 
-    //    if(res < error )
-    //    {
-    //        return Side.Left;
-    //    }
-    //    else if (res > error)
-    //    {
-    //        return Side.Right;
-    //    }
-    //    else
-    //    {
-    //        return Side.On;
-    //    }
+        if (error > Math.Abs(res))
+        {
+            return Side.On;
+        }
+        else if (res > error)
+        {
+            return Side.Left;
+        }
+        else
+        {
+            return Side.Right;
+        }
 
-    //}
-
-    //public Side whichSide(Point2D p3)
-    //{
-    //    double A = (head.Y - tail.Y) / (head.X - tail.X);
-    //    //double B = head.Y - (A * head.X);
-    //    // double res = eq.A * p3.x + eq.B * p3.y + eq.C;
-    //    double B = 1.0;//mam tylko A i B -> C
-    //    double C = 0.0;
-    //    double res = -1 * A * p3.X + B * p3.Y - C;
-    //    if (res < -0.001)
-    //    {
-    //        return Side.Left;
-    //        //System.out.println("Punkt z „lewej” strony prostej");
-    //    }
-    //    else if (res > 0.001)
-    //    {
-    //        return Side.Right;
-    //        //System.out.println("Punkt z prawej strony prostej");
-    //    }
-    //    else
-    //    {
-    //        return Side.On;
-    //        //System.out.println("Punkt na prostej");
-    //    }
-    //}
-
-    //public void LineEquation()
-    //{
-    //    double A = (head.Y - tail.Y) / (head.X - tail.X);
-    //    double B = head.Y - (A * head.X);
-    //    double C = 0;
-    //}
+    }
 
     public Side whichSide(Point2D p)
     {
@@ -159,7 +142,8 @@ public class Line :MonoBehaviour
         if (d < -error)
         {
             return Side.Right;
-        }else if (d>error)
+        }
+        else if (d > error)
         {
             return Side.Left;
         }
@@ -168,8 +152,6 @@ public class Line :MonoBehaviour
             return Side.On;
         }
     }
-
-#nullable enable
 
     public XY crossingPointCramer(Line line2)
     {
@@ -197,20 +179,45 @@ public class Line :MonoBehaviour
         var linclc = lineEquationGeneral();
         return linclc[EquationABC.A] + "x + " + linclc[EquationABC.B] + "y + " + linclc[EquationABC.C];
     }
-
+    // Fioletowy -> początek wektora
     protected virtual void MakeLine(Point2D start, Point2D stop,Material material)
     {
         var go = new GameObject();
         LineRendererObj = go.AddComponent<LineRenderer>();
         LineRendererObj.name = ToString();
-        LineRendererObj.startWidth = .01f;
+        LineRendererObj.startWidth = .10f;
         LineRendererObj.endWidth = .10f;
         LineRendererObj.SetPosition(0, start.Position);
         LineRendererObj.SetPosition(1, stop.Position);
         LineRendererObj.material = material;
+
+        StartCoroutine(AnimateLine());
+
+    }
+    private int animationDuration = 1;
+    private IEnumerator AnimateLine()
+    {
+       // float segmentDuration = animationDuration / pointsCount;
+
+  
+            float startTime = Time.time;
+
+            Vector3 startPosition = LineRendererObj.GetPosition(0);
+            Vector3 endPosition = LineRendererObj.GetPosition(1);
+
+            Vector3 pos = startPosition;
+            while (pos != endPosition)
+            {
+                float t = (Time.time - startTime) / animationDuration;
+                pos = Vector3.Lerp(startPosition, endPosition, t);
+            LineRendererObj.SetPosition(1, pos);
+
+                yield return null;
+            }
+        
     }
 
-    public double Solve(double x)
+        public double Solve(double x)
     {
         var fun = lineEquation();
 
@@ -220,16 +227,19 @@ public class Line :MonoBehaviour
 
     private void Update()
     {
-        if((Vector2)LineRendererObj.GetPosition(0) != head.Position)
+        if (LineRendererObj)
         {
-            LineRendererObj.SetPosition(0, head.Position);
-            LineRendererObj.name = ToString();
-        }
+            if ((Vector2)LineRendererObj.GetPosition(0) != head.Position)
+            {
+                LineRendererObj.SetPosition(0, head.Position);
+                LineRendererObj.name = ToString();
+            }
 
-        if ((Vector2)LineRendererObj.GetPosition(1) != tail.Position)
-        {
-            LineRendererObj.SetPosition(1, tail.Position);
-            LineRendererObj.name = ToString();
+            if ((Vector2)LineRendererObj.GetPosition(1) != tail.Position)
+            {
+                LineRendererObj.SetPosition(1, tail.Position);
+                LineRendererObj.name = ToString();
+            }
         }
     }
 

@@ -6,7 +6,8 @@ public class Main3_1 : MonoBehaviour
 {
     public GameObject Prefab;
     public Material LineMaterial;
-
+    private Point2D probe;
+    private Line ab;
     private Point2D MakePoint(float x, float y)
     {
         var resp = gameObject.AddComponent<Point2D>();
@@ -32,12 +33,21 @@ public class Main3_1 : MonoBehaviour
         var a = MakePoint(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
         var b = MakePoint(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
 
-        var ab = MakeLine(a, b);
+        ab = MakeLine(a, b);
 
-        var probe = MakePoint(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
+        probe = MakePoint(Random.Range(-10f, 10f), Random.Range(-10f, 10f));
 
         print(probe + "\nNa lini: " + ab.lineEquationGeneralPrint() + "\nZnajduje siê po stronie: " + ab.whichSide(probe));
 
     }
-        
+    private void Update()
+    {
+        if (ab)
+        {
+            var a = ab.lineEquation();
+            print(a[Line.EquationAB.A] + " - " + a[Line.EquationAB.B]);
+            print(ab.whichSide(probe));
+        }
+    }
+
 }

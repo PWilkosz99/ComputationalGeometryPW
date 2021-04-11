@@ -12,7 +12,7 @@ public class Circle : MonoBehaviour
     LineRenderer line;
 
     int segments = 360;
-    double error = 0.1;
+    double error = 0.5;
 
 
     public void PassArgs(Vector2 Center,float r, Material LineMaterial, GameObject PointPrefab)
@@ -65,9 +65,10 @@ public class Circle : MonoBehaviour
 
     public int LineTouch(Line l)
     {
+   
 
         float a = Mathf.Pow(l.head.X, 2) + Mathf.Pow(l.head.Y, 2) + Mathf.Pow(l.tail.X, 2) + Mathf.Pow(l.tail.Y, 2)
-            - 2f * (l.head.X * l.tail.X + l.head.X * l.tail.Y);
+            - 2f * (l.head.X * l.tail.X + l.head.Y * l.tail.Y);
 
         float b = 2f * ( center.X * (l.tail.X - l.head.X) + center.Y * (l.tail.Y - l.head.Y) +
             l.head.X * l.tail.X + l.head.Y * l.tail.Y - Mathf.Pow(l.tail.X, 2) - Mathf.Pow(l.tail.Y, 2));
@@ -76,9 +77,13 @@ public class Circle : MonoBehaviour
             2f * (center.X * l.tail.X + center.Y * l.tail.Y);
 
 
+        float dx = l.tail.X - l.head.X;
+        float dy = l.tail.Y - l.head.Y;
+
+        float t;
 
 
-        float delta = Mathf.Pow(b, 2) - 4 * a * c;
+        float delta = Mathf.Pow(b, 2) - 4f * a * c;
 
         int respone = -1;
 
@@ -86,8 +91,9 @@ public class Circle : MonoBehaviour
         {
             respone = 1;
 
-            float X0 = (-1f*b-Mathf.Sqrt(delta))/(2f*a);
-
+            //float X0 = (-1f*b)/(2f*a);
+            //float Y0 = (float)l.Solve((double)X0);
+            //print(X0 + ":" + Y0);
         }
         else if (delta < error)
         {
@@ -96,13 +102,52 @@ public class Circle : MonoBehaviour
         else
         {
             respone = 2;
-            float X1 = (-1f * b + Mathf.Sqrt(delta)) / (2f * a);
-            float X2 = (-1f * b - Mathf.Sqrt(delta)) / (2f * a);
+            //float X1 = (-1f * b + Mathf.Sqrt(delta)) / (2f * a);
+            //float X2 = (-1f * b - Mathf.Sqrt(delta)) / (2f * a);
 
-            float Y1 = (float)l.Solve((double)X1);
-            float Y2 = (float)l.Solve((double)X2);
-            print(X1 + ":" + Y1 + " -- " + X2 + ":" + Y2);
+            //float Y1 = (float)l.Solve((double)X1);
+            //float Y2 = (float)l.Solve((double)X1);
+            //print(X1 + ":" + Y1 + " -- " + X2 + ":" + Y2);
         }
+
         return respone;
+    }
+
+    public int LineTouch2(Line l)
+    {
+        float dx = l.tail.X - l.head.X;
+        float dy = l.tail.Y - l.head.Y;
+        float t;
+        float A = dx * dx + dy * dy;
+        float B = 2 * (dx * (l.A.X - center.X) + dy * (l.A.Y - center.Y));
+        float C = (l.A.X - center.X) * (l.A.X - center.X) + (l.A.Y - center.Y) * (l.A.Y - center.Y) - R * R;
+
+        float det = B * B - 4 * A * C;
+
+        if ((A <= 0.0000001) || (det < 0))
+        {
+            // No real solutions.
+            return 0;
+        }
+        else if (det == 0)
+        {
+            // One solution.
+            t = -B / (2 * A);
+            float X0 = l.A.X + t * dx;
+            float Y0 = l.A.Y + t * dy;
+            return 1;
+        }
+        else
+        {
+            // Two solutions.
+            t = (float)((-B + Mathf.Sqrt(det)) / (2 * A));
+            float X1 = l.A.X + t * dx;
+            float Y1 = l.A.Y + t * dy;
+            t = (float)((-B - Mathf.Sqrt(det)) / (2 * A));
+            float X2 = l.A.X + t * dx;
+            float Y2 = l.A.Y + t * dy;
+            print(X1 + ":" + Y1 + " -- " + X2 + ":" + Y2);
+            return 2;
+        }
     }
 }
