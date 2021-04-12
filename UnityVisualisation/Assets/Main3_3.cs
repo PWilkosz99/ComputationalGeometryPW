@@ -10,7 +10,7 @@ public class Main3_3 : MonoBehaviour
     private Point2D MakePoint(float x, float y)
     {
         var resp = gameObject.AddComponent<Point2D>();
-        resp.PassArgs(x, y, Prefab);
+        resp.PassArgs(x , y, Prefab);
         return resp;
     }
 
@@ -42,6 +42,7 @@ public class Main3_3 : MonoBehaviour
 
     Point2D p;
     Polygon pol;
+    Line probe;
 
     // Start is called before the first frame update
     void Start()
@@ -55,11 +56,14 @@ public class Main3_3 : MonoBehaviour
         a.Add(MakeRandomPoint());
         pol = MakePolygon(a);
         p = MakeRandomPoint();
+
+        var InfPoint = MakePoint(100, 100);
+        probe = MakeLine(p, InfPoint);
     }
 
     // Update is called once per frame
     void Update()
-    {
-        print(pol.IsInside(p));
+    {        
+        print(pol.IsInside(probe));
     }
 }

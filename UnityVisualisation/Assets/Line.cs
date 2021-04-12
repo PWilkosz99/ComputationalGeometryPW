@@ -67,24 +67,36 @@ public class Line :MonoBehaviour
         return "Odcinek " + tail + " -> " + head;
     }
 
+    public bool DirectLineBelongig(Point2D p) => DirectLineBelongig(p.Position);
+    public bool LineBelongig(Point2D p) => LineBelongig(p.Position);
 
 
-    public void lineBelongig(Point2D p)
+    public bool DirectLineBelongig(Vector2 p)
     {
         double a = (head.Y - tail.Y) / (head.X - tail.X);
         double b = head.Y - a * head.X;
-        double ey = a * p.X + b;
-        if ((p.Y - ey) < error)
+        double ey = a * p.x + b;
+        if ((p.y - ey) < error)
         {
-            Debug.LogWarning("Punkt leży na prostej");
-            if (p.X >= (Math.Min(head.X, tail.X) - error) && p.X <= (Math.Max(head.X, tail.X) + error)
-                    && p.Y >= (Math.Min(head.Y, tail.Y) - error) && p.Y <= (Math.Max(head.Y, tail.Y) + error))
-            {
-                Debug.LogWarning("Punkt leży na odnciku");
-            }
+            //Debug.LogWarning("Punkt leży na prostej");
+            return true;
         }
+        return false;
     }
 
+    public bool LineBelongig(Vector2 p)
+    {
+        if (DirectLineBelongig(p))
+        {
+            if (p.y >= (Math.Min(head.X, tail.X) - error) && p.x <= (Math.Max(head.X, tail.X) + error)
+                                && p.y >= (Math.Min(head.Y, tail.Y) - error) && p.y <= (Math.Max(head.Y, tail.Y) + error))
+            {
+                //Debug.LogWarning("Punkt leży na odnciku");
+                return true;
+            }
+        } 
+        return false;
+    }
 
 
     public void translation(Vector2 v)
@@ -165,9 +177,9 @@ public class Line :MonoBehaviour
         if (result.notExist)
         {
             //MonoBehaviour - This class doesn't support the null-conditional operator (?.) and the null-coalescing operator (??).
-
+            
             Debug.Log("Proste równoległe");
-            result = new XY() { X = double.NaN, Y = double.NaN };
+            result = new XY() { X = double.NaN, Y = double.NaN, notExist = true };
         }
 
         return result;

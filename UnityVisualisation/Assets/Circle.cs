@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,7 +63,7 @@ public class Circle : MonoBehaviour
         }
     }
 
-
+    [Obsolete]
     public int LineTouch(Line l)
     {
    
@@ -124,22 +125,20 @@ public class Circle : MonoBehaviour
 
         float det = B * B - 4 * A * C;
 
-        if ((A <= 0.0000001) || (det < 0))
+        if ((A <= error) || (det < 0))
         {
-            // No real solutions.
             return 0;
         }
         else if (det == 0)
         {
-            // One solution.
             t = -B / (2 * A);
             float X0 = l.A.X + t * dx;
             float Y0 = l.A.Y + t * dy;
+            print(X0 + ":" + Y0);
             return 1;
         }
         else
         {
-            // Two solutions.
             t = (float)((-B + Mathf.Sqrt(det)) / (2 * A));
             float X1 = l.A.X + t * dx;
             float Y1 = l.A.Y + t * dy;

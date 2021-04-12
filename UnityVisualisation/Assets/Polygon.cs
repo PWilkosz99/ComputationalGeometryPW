@@ -35,15 +35,29 @@ public class Polygon : MonoBehaviour
         LineList.Add(tmp);
     }
 
-    public bool IsInside(Point2D p)
+    public bool IsInside(Line p)
     {
+        int count = 0;
         foreach(Line l in LineList)
         {
-            if(l.whichSide(p) != Line.Side.Right)
+            var hm = p.crossingPointCramer(l);
+            if(!hm.notExist) // jak przecina
             {
-                return false;
+                var hmm = new Vector2((float)hm.X, (float)hm.Y);
+                if (p.LineBelongig(hmm))
+                {
+                    //   count++; // czy pkt nalezy do odcinka
+                    if (l.LineBelongig(hmm))
+                    {
+                        count++; // czy pkt nalezy do odcinka
+
+                        print(l +  " " + hmm);
+
+                    }
+                }
             }
         }
-        return true;
+        print(count);
+        return (count % 2 == 1) ? true : false;
     }
 }
