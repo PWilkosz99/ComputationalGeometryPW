@@ -67,6 +67,29 @@ public class Point2D : MonoBehaviour
         XY = 3,
     }
 
+    public void mirror(Mirror mirror)
+    {
+        ushort val = (ushort)mirror;
+
+        if ((val & 1) == 1)
+        {
+            X *= -1;
+        }
+
+        if ((val & 2) == 2)
+        {
+            Y *= -1;
+        }
+    }
+
+    public float AngleBetweenPoints(Point2D l1, Point2D l2)
+    {
+        Vector2 v1 = new Vector2(X - l1.X, Y - l1.Y);
+        Vector2 v2 = new Vector2(X - l2.X, Y - l2.Y);
+        return Vector2.Angle(v1, v2); //I'm using the built-in unity function 
+    }
+
+
     private void Update()
     { 
         if(PointFromTemplate != null) // aktualizacja nazwy aby zawsze przedstawia³a wspó³rzêdne
@@ -76,21 +99,6 @@ public class Point2D : MonoBehaviour
                 PointFromTemplate.name = ToString();
             }
         }
-    }
-
-    public void mirror(Mirror mirror)
-    {
-        ushort val = (ushort)mirror;
-
-        if((val & 1) == 1)
-        {
-            X *= -1;
-        }
-
-        if((val & 2) == 2)
-        {
-            Y *= -1;
-        }  
     }
 }
 

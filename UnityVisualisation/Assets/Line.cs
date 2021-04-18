@@ -126,27 +126,6 @@ public class Line : MonoBehaviour
         return res;
     }
 
-    public Side whichSide2(Point2D point)
-    {
-        throw new Exception("Not working");
-        var ab = lineEquationGeneral();
-        double res = ab[EquationABC.A] * point.X + ab[EquationABC.B] * point.Y + ab[EquationABC.C];
-
-        if (error > Math.Abs(res))
-        {
-            return Side.On;
-        }
-        else if (res > error)
-        {
-            return Side.Left;
-        }
-        else
-        {
-            return Side.Right;
-        }
-
-    }
-
     public Side whichSide(Point2D p)
     {
         //d = (x - x1)(y2 - y1) - (y - y1)(x2 - x1)
@@ -176,8 +155,6 @@ public class Line : MonoBehaviour
 
         if (result.notExist)
         {
-            //MonoBehaviour - This class doesn't support the null-conditional operator (?.) and the null-coalescing operator (??).
-
             Debug.Log("Proste równoległe");
             result = new XY() { X = double.NaN, Y = double.NaN, notExist = true };
         }
