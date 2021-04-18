@@ -2,6 +2,7 @@ using System;
 
 public class Matrix {
 
+    //When matrix 3x3
     public static XY crossingPointCramer(double A1, double A2, double B1, double B2, double C1, double C2)
     {
         var w = cross(A1, A2, B1, B2);
@@ -19,9 +20,6 @@ public class Matrix {
         return result;
     }
 
-    //kolumny najpierw
-    // [A1][B2]
-    // [A1][B2]
     public static double cross(double A1, double A2, double B1, double B2)
     {
         return A1*B2-B1*A2;

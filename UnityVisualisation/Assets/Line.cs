@@ -4,31 +4,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Line :MonoBehaviour
+public class Line : MonoBehaviour
 {
     protected LineRenderer LineRendererObj;
-    double error = 0.5;
+    double error = 0.5; //precision to assess distance from the line 
 
     public Point2D A => tail;
     public Point2D B => head;
 
 
-    public enum EquationABC {
+    public enum EquationABC
+    {
         A,
         B,
-        C,    
+        C,
     }
 
-    public enum EquationAB {
+    public enum EquationAB
+    {
         A,
         B,
     }
-    /// <summary>
-    /// A |------> B
-    /// </summary>
-    /// <param name="tail">A Punkt zaczepienia, początek</param>
-    /// <param name="head">B Zwrot, koniec</param>
-    /// <param name="material">Materiał z inspektora</param>
+
+
+    //Method witch i use for passing arngs to which let me pass proper args to make unity's line
     public void PassArgs(Point2D tail, Point2D head, Material material)
     {
         this.head = head;
@@ -40,8 +39,8 @@ public class Line :MonoBehaviour
 
     public Line Clone(GameObject GameObjectParm)
     {
-        var resp = GameObjectParm.AddComponent<Line>();        
-        resp.PassArgs( tail.Clone(GameObjectParm), head.Clone(GameObjectParm), Material);
+        var resp = GameObjectParm.AddComponent<Line>();
+        resp.PassArgs(tail.Clone(GameObjectParm), head.Clone(GameObjectParm), Material);
         return resp;
     }
 
@@ -50,9 +49,10 @@ public class Line :MonoBehaviour
     public Point2D tail;
     public Material Material;
 
-    public Dictionary<EquationAB, Double> lineEquation() {
+    public Dictionary<EquationAB, Double> lineEquation()
+    {
         var ans = new Dictionary<EquationAB, Double>();
-        if(A.X == B.X)
+        if (A.X == B.X)
         {
             throw new LineIsNotFunctionException(this);
         }
@@ -78,7 +78,6 @@ public class Line :MonoBehaviour
         double ey = a * p.x + b;
         if ((p.y - ey) < error)
         {
-            //Debug.LogWarning("Punkt leży na prostej");
             return true;
         }
         return false;
@@ -91,10 +90,10 @@ public class Line :MonoBehaviour
             if (p.y >= (Math.Min(head.X, tail.X) - error) && p.x <= (Math.Max(head.X, tail.X) + error)
                                 && p.y >= (Math.Min(head.Y, tail.Y) - error) && p.y <= (Math.Max(head.Y, tail.Y) + error))
             {
-                //Debug.LogWarning("Punkt leży na odnciku");
+                //if true it's on line
                 return true;
             }
-        } 
+        }
         return false;
     }
 
@@ -113,15 +112,16 @@ public class Line :MonoBehaviour
         Right,
         On,
     }
-    
+
 
     // Ax+Bx+C
-    public Dictionary<EquationABC, Double> lineEquationGeneral () {
-        var ab = lineEquation();  
+    public Dictionary<EquationABC, Double> lineEquationGeneral()
+    {
+        var ab = lineEquation();
         var res = new Dictionary<EquationABC, Double>();
 
-        res.Add(EquationABC.A, ab[EquationAB.A] *-1); // -A
-        res.Add(EquationABC.C, ab[EquationAB.B] *-1); // -C (było b);
+        res.Add(EquationABC.A, ab[EquationAB.A] * -1); // -A
+        res.Add(EquationABC.C, ab[EquationAB.B] * -1); // -C (było b);
         res.Add(EquationABC.B, 1.0);  // 1b -> y= ...
         return res;
     }
@@ -130,7 +130,7 @@ public class Line :MonoBehaviour
     {
         throw new Exception("Not working");
         var ab = lineEquationGeneral();
-        var res = ab[EquationABC.A] * point.X + ab[EquationABC.B] * point.Y + ab[EquationABC.C];
+        double res = ab[EquationABC.A] * point.X + ab[EquationABC.B] * point.Y + ab[EquationABC.C];
 
         if (error > Math.Abs(res))
         {
@@ -177,7 +177,7 @@ public class Line :MonoBehaviour
         if (result.notExist)
         {
             //MonoBehaviour - This class doesn't support the null-conditional operator (?.) and the null-coalescing operator (??).
-            
+
             Debug.Log("Proste równoległe");
             result = new XY() { X = double.NaN, Y = double.NaN, notExist = true };
         }
@@ -191,45 +191,20 @@ public class Line :MonoBehaviour
         var linclc = lineEquationGeneral();
         return linclc[EquationABC.A] + "x + " + linclc[EquationABC.B] + "y + " + linclc[EquationABC.C];
     }
-    // Fioletowy -> początek wektora
-    protected virtual void MakeLine(Point2D start, Point2D stop,Material material)
+
+    protected virtual void MakeLine(Point2D start, Point2D stop, Material material)
     {
         var go = new GameObject();
         LineRendererObj = go.AddComponent<LineRenderer>();
         LineRendererObj.name = ToString();
         LineRendererObj.startWidth = .10f;
-        LineRendererObj.endWidth = .10f;
+        LineRendererObj.endWidth = .7f;
         LineRendererObj.SetPosition(0, start.Position);
         LineRendererObj.SetPosition(1, stop.Position);
         LineRendererObj.material = material;
-
-        StartCoroutine(AnimateLine());
-
-    }
-    private int animationDuration = 1;
-    private IEnumerator AnimateLine()
-    {
-       // float segmentDuration = animationDuration / pointsCount;
-
-  
-            float startTime = Time.time;
-
-            Vector3 startPosition = LineRendererObj.GetPosition(0);
-            Vector3 endPosition = LineRendererObj.GetPosition(1);
-
-            Vector3 pos = startPosition;
-            while (pos != endPosition)
-            {
-                float t = (Time.time - startTime) / animationDuration;
-                pos = Vector3.Lerp(startPosition, endPosition, t);
-            LineRendererObj.SetPosition(1, pos);
-
-                yield return null;
-            }
-        
     }
 
-        public double Solve(double x)
+    public double Solve(double x)
     {
         var fun = lineEquation();
 
@@ -254,11 +229,6 @@ public class Line :MonoBehaviour
             }
         }
     }
-
-    //public static double Length(Point2D A, Point2D B)
-    //{
-    //    return Math.Sqrt(Math.Pow((B.X - A.X), 2) + Math.Pow((B.Y - A.Y), 2));
-    //}
 
     public double Length()
     {

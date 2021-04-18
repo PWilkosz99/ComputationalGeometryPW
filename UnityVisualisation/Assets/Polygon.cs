@@ -8,19 +8,12 @@ public class Polygon : MonoBehaviour
 
     public void PassArgs(ArrayList arr, Material LineMaterial)
     {
-        //A = gameObject.AddComponent<Line>();
-        //B = gameObject.AddComponent<Line>();
-        //C = gameObject.AddComponent<Line>();
 
-        //A.PassArgs(a, b, LineMaterial);
-        //B.PassArgs(b, c, LineMaterial);
-        //C.PassArgs(c, a, LineMaterial);
         Point2D lastpoint = null;
         Line tmp = new Line();
         int i = 0;
         foreach(Point2D p in arr)
         {
-            //LineList.Add(p);
             tmp = gameObject.AddComponent<Line>();
             if (i != 0)
             {
@@ -41,23 +34,20 @@ public class Polygon : MonoBehaviour
         foreach(Line l in LineList)
         {
             var hm = p.crossingPointCramer(l);
-            if(!hm.notExist) // jak przecina
+            if(!hm.notExist) // when it cross
             {
                 var hmm = new Vector2((float)hm.X, (float)hm.Y);
                 if (p.LineBelongig(hmm))
                 {
-                    //   count++; // czy pkt nalezy do odcinka
                     if (l.LineBelongig(hmm))
                     {
-                        count++; // czy pkt nalezy do odcinka
-
+                        count++; // if it belong
                         print(l +  " " + hmm);
-
                     }
                 }
             }
         }
         print(count);
-        return (count % 2 == 1) ? true : false;
+        return (count % 2 == 1);
     }
 }

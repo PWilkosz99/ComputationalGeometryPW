@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Triangle: MonoBehaviour {
-  //  public Line A, B, C;
 
-    public Line A => points[0];
-    public Line B => points[1];
-    public Line C => points[2];
+    public Line A => lines[0];
+    public Line B => lines[1];
+    public Line C => lines[2];
 
-
-    private List<Line> points = new List<Line>();
+    private List<Line> lines = new List<Line>();
 
     public void PassArgs(Point2D a, Point2D b, Point2D c, Material LineMaterial)
     {
 
-        points.Add(gameObject.AddComponent<Line>());
-        points.Add(gameObject.AddComponent<Line>());
-        points.Add(gameObject.AddComponent<Line>());
+        lines.Add(gameObject.AddComponent<Line>());
+        lines.Add(gameObject.AddComponent<Line>());
+        lines.Add(gameObject.AddComponent<Line>());
 
 
-        points[0].PassArgs(a, b, LineMaterial);
-        points[1].PassArgs(b, c, LineMaterial);
-        points[2].PassArgs(c, a, LineMaterial);
+        lines[0].PassArgs(a, b, LineMaterial);
+        lines[1].PassArgs(b, c, LineMaterial);
+        lines[2].PassArgs(c, a, LineMaterial);
     }
 
     public override string ToString()
@@ -44,24 +42,13 @@ public class Triangle: MonoBehaviour {
     
     public bool IsInside(Point2D p)
     {
-        //bool status = true;
+        Line.Side firstpointside = lines[0].whichSide(p);
 
-        //foreach (var item in points)
-        //{
-        //    if(item.whichSide(p) != Line.Side.Left)
-        //    {
-        //        status = false;
-        //    }
-        //}
-        //return status;
-
-        Line.Side firstpointside = points[0].whichSide(p);
-
-        if(!(points[1].whichSide(p) == firstpointside))
+        if(!(lines[1].whichSide(p) == firstpointside))
         {
             return false;
         }
-        else if(!(points[2].whichSide(p) == firstpointside))
+        else if(!(lines[2].whichSide(p) == firstpointside))
         {
             return false;
         }

@@ -78,9 +78,6 @@ public class Point2D : MonoBehaviour
         }
     }
 
-
-
-
     public void mirror(Mirror mirror)
     {
         ushort val = (ushort)mirror;
