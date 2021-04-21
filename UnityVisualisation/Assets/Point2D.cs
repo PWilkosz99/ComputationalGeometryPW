@@ -82,6 +82,16 @@ public class Point2D : MonoBehaviour
         }
     }
 
+    public void EquationWithSecondPoint(Point2D P)
+    {
+        double a = P.Y - Y;
+        double b = X - P.X;
+        double c = a * (P.X) + b * (Y);
+        print("Wzór funkcji:" + a + "x - " + b + "y = " + c);
+
+    }
+
+
     public float AngleBetweenPoints(Point2D l1, Point2D l2)
     {
         Vector2 v1 = new Vector2(X - l1.X, Y - l1.Y);
