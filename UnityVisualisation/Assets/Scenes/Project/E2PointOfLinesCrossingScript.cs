@@ -23,10 +23,15 @@ public class E2PointOfLinesCrossingScript : MonoBehaviour
         resp.PassArgs(Random.Range(-10f, 10f), Random.Range(-10f, 10f), Prefab);
         return resp;
     }
-
     private Line MakeLine(Point2D one, Point2D two)
     {
         var resp = gameObject.AddComponent<Line>();
+        resp.PassArgs(one, two, LineMaterial);
+        return resp;
+    }
+    private Line MakeDirectLine(Point2D one, Point2D two)
+    {
+        var resp = gameObject.AddComponent<DirectLine>();
         resp.PassArgs(one, two, LineMaterial);
         return resp;
     }
@@ -34,6 +39,12 @@ public class E2PointOfLinesCrossingScript : MonoBehaviour
     {
         var resp = gameObject.AddComponent<Triangle>();
         resp.PassArgs(a, b, c, LineMaterial);
+        return resp;
+    }
+    private Circle MakeCircle(Vector2 v, float R)
+    {
+        var resp = gameObject.AddComponent<Circle>();
+        resp.PassArgs(v, R, LineMaterial, Prefab);
         return resp;
     }
     private Polygon MakePolygon(ArrayList arr)

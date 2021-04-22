@@ -33,21 +33,20 @@ public class Polygon : MonoBehaviour
         int count = 0;
         foreach(Line l in LineList)
         {
-            var hm = p.crossingPointCramer(l);
-            if(!hm.notExist) // when it cross
+            var cross = p.crossingPointCramer(l);
+            if(!cross.notExist) // when it cross
             {
-                var hmm = new Vector2((float)hm.X, (float)hm.Y);
-                if (p.LineBelongig(hmm))
+                var crs = new Vector2((float)cross.X, (float)cross.Y);
+                if (p.LineBelongig(crs))
                 {
-                    if (l.LineBelongig(hmm))
+                    if (l.LineBelongig(crs))
                     {
                         count++; // if it belong
-                        print(l +  " " + hmm);
                     }
                 }
             }
         }
         print(count);
-        return (count % 2 == 1);
+        return ((count % 2) == 1);
     }
 }

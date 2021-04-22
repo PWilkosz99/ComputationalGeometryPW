@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/Project/E3EquationFor2Points.unity
+- path: Assets/Scenes/Project/E7CircleWithLineCrossingPoints.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
