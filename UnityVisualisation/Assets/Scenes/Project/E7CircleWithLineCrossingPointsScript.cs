@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class E7CircleWithLineCrossingPointsScript : MonoBehaviour
 {
@@ -69,5 +70,11 @@ public class E7CircleWithLineCrossingPointsScript : MonoBehaviour
     void Update()
     {
         print(circle.LineTouch(line));
+    }
+
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 10, 50, 50), "Powrót"))
+            SceneManager.LoadScene("ProjectGUI");
     }
 }

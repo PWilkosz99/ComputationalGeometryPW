@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class E10KDTreeScript : MonoBehaviour
 {
@@ -82,5 +83,11 @@ public class E10KDTreeScript : MonoBehaviour
     {
         print(kdt.FindNearestPoint(p).x);
         l.head = kdt.FindNearestPoint(p).x;
+    }
+
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 10, 50, 50), "Powrót"))
+            SceneManager.LoadScene("ProjectGUI");
     }
 }

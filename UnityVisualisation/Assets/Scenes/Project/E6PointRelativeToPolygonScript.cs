@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class E6PointRelativeToPolygonScript : MonoBehaviour
 {
@@ -80,5 +81,11 @@ public class E6PointRelativeToPolygonScript : MonoBehaviour
     void Update()
     {
         print(polygon.IsInside(testLine));
+    }
+
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 10, 50, 50), "Powrót"))
+            SceneManager.LoadScene("ProjectGUI");
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class E3EquationFor2PointsScript : MonoBehaviour
 {
@@ -69,5 +70,11 @@ public class E3EquationFor2PointsScript : MonoBehaviour
     void Update()
     {
         p1.EquationWithSecondPoint(p2);
+    }
+
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 10, 50, 50), "Powrót"))
+            SceneManager.LoadScene("ProjectGUI");
     }
 }

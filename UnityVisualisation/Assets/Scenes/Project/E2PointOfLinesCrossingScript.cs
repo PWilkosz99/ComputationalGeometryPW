@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class E2PointOfLinesCrossingScript : MonoBehaviour
 {
@@ -70,5 +71,11 @@ public class E2PointOfLinesCrossingScript : MonoBehaviour
     void Update()
     {
         print(line1.crossingPointCramer(line2));
+    }
+
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 10, 50, 50), "Powrót"))
+            SceneManager.LoadScene("ProjectGUI");
     }
 }

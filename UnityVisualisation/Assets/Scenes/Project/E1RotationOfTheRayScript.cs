@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class E1RotationOfTheRayScript : MonoBehaviour
 {
@@ -57,17 +58,30 @@ public class E1RotationOfTheRayScript : MonoBehaviour
     #endregion
 
     Line line;
+    int counter;
+    float timer;
 
     // Start is called before the first frame update
     void Start()
     {
         line = MakeLine(MakePoint(0f, 0f), MakeRandomPoint());
-        
+        counter = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        line.Rotate();
+        timer += Time.deltaTime;
+        if (timer>5)
+        {
+            line.Rotate();
+            timer = 0;
+        }
+    }
+
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 10, 50, 50), "Powrót"))
+            SceneManager.LoadScene("ProjectGUI");
     }
 }

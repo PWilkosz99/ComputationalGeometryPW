@@ -39,6 +39,10 @@ public class SceneSelector : MonoBehaviour
             case "Scene10Button":
                 SceneManager.LoadScene("E10KDTree");
                 break;
+            case "QuitButton":
+                print("Bye");
+                Application.Quit();
+                break;
         }
     }
 }
