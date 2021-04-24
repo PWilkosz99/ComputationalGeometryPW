@@ -55,15 +55,32 @@ public class E10KDTreeScript : MonoBehaviour
 
     #endregion
 
+    Point2D p;
+    Point2D tmp;
+    Line l;
+    KDTree kdt;
+
     // Start is called before the first frame update
     void Start()
     {
+        int numpoints = 20;
 
+        kdt = new KDTree(numpoints);
+
+        for (int i = 0; i < numpoints; i++)
+        {
+            tmp = MakeRandomPoint();
+            kdt.Add(tmp);
+        }
+
+        p = MakePoint(1, 1);
+        l = MakeLine(p, tmp);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        print(kdt.FindNearestPoint(p).x);
+        l.head = kdt.FindNearestPoint(p).x;
     }
 }
