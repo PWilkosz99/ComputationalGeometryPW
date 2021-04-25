@@ -111,8 +111,3 @@ public class Point2D : MonoBehaviour
         }
     }
 }
-
-
-
-
-

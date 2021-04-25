@@ -58,14 +58,12 @@ public class E1RotationOfTheRayScript : MonoBehaviour
     #endregion
 
     Line line;
-    int counter;
     float timer;
 
     // Start is called before the first frame update
     void Start()
     {
         line = MakeLine(MakePoint(0f, 0f), MakeRandomPoint());
-        counter = 0;
     }
 
     // Update is called once per frame
@@ -74,7 +72,7 @@ public class E1RotationOfTheRayScript : MonoBehaviour
         timer += Time.deltaTime;
         if (timer>5)
         {
-            line.Rotate();
+            line.Rotate(45);
             timer = 0;
         }
     }

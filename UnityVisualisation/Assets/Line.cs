@@ -212,8 +212,8 @@ public class Line : MonoBehaviour
         return Math.Sqrt((Math.Pow((tail.X - head.X), 2) + Math.Pow((tail.Y - tail.X), 2)));
     }
 
-    public void Rotate()
+    public void Rotate(float angle)
     {
-        B.rotate(90f);
+        B.rotate(angle);
     }
 }
