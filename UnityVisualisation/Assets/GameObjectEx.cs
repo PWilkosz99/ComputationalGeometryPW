@@ -4,24 +4,52 @@ using UnityEngine;
 
 public static class GameObjectEx
 {
-    public static void DrawCircle(this GameObject container, float radius, float lineWidth)
+    public static Point2D MakePoint(this GameObject gameObject, float x, float y, GameObject Prefab)
     {
-        var segments = 360;
-        var line = container.AddComponent<LineRenderer>();
-        line.useWorldSpace = false;
-        line.startWidth = lineWidth;
-        line.endWidth = lineWidth;
-        line.positionCount = segments + 1;
+        var resp = gameObject.AddComponent<Point2D>();
+        resp.PassArgs(x, y, Prefab);
+        return resp;
+    }
 
-        var pointCount = segments + 1; // add extra point to make startpoint and endpoint the same to close the circle
-        var points = new Vector3[pointCount];
+    public static Point2D MakeRandomPoint(this GameObject gameObject, GameObject Prefab)
+    {
+        var resp = gameObject.AddComponent<Point2D>();
+        resp.PassArgs(Random.Range(-10f, 10f), Random.Range(-10f, 10f), Prefab);
+        return resp;
+    }
 
-        for (int i = 0; i < pointCount; i++)
-        {
-            var rad = Mathf.Deg2Rad * (i * 360f / segments);
-            points[i] = new Vector2(Mathf.Sin(rad) * radius, Mathf.Cos(rad) * radius);
-        }
+    public static Line MakeLine(this GameObject gameObject, Point2D one, Point2D two, Material LineMaterial)
+    {
+        var resp = gameObject.AddComponent<Line>();
+        resp.PassArgs(one, two, LineMaterial);
+        return resp;
+    }
 
-        line.SetPositions(points);
+    public static Line MakeDirectLine(this GameObject gameObject, Point2D one, Point2D two, Material LineMaterial)
+    {
+        var resp = gameObject.AddComponent<DirectLine>();
+        resp.PassArgs(one, two, LineMaterial);
+        return resp;
+    }
+
+    public static Triangle MakeTriangle(this GameObject gameObject, Point2D a, Point2D b, Point2D c, Material LineMaterial)
+    {
+        var resp = gameObject.AddComponent<Triangle>();
+        resp.PassArgs(a, b, c, LineMaterial);
+        return resp;
+    }
+
+    public static Polygon MakePolygon(this GameObject gameObject, ArrayList arr, Material LineMaterial)
+    {
+        var resp = gameObject.AddComponent<Polygon>();
+        resp.PassArgs(arr, LineMaterial);
+        return resp;
+    }
+
+    public static Circle MakeCircle(this GameObject gameObject, Vector2 v, float R, GameObject Prefab, Material LineMaterial)
+    {
+        var resp = gameObject.AddComponent<Circle>();
+        resp.PassArgs(v, R, LineMaterial, Prefab);
+        return resp;
     }
 }

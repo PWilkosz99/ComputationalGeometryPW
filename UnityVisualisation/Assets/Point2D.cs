@@ -37,6 +37,7 @@ public class Point2D : MonoBehaviour
         Position = new Vector2(x, y);
     }
 
+    public void SetActive(bool val) => Prefab.SetActive(val);
 
     public override string ToString()
     {

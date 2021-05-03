@@ -36,6 +36,17 @@ public class Line : MonoBehaviour
         MakeLine(head, tail, material);
     }
 
+    protected virtual void MakeLine(Point2D start, Point2D stop, Material material)
+    {
+        var go = new GameObject();
+        LineRendererObj = go.AddComponent<LineRenderer>();
+        LineRendererObj.name = ToString();
+        LineRendererObj.startWidth = .05f;
+        LineRendererObj.endWidth = .05f;
+        LineRendererObj.SetPosition(0, start.Position);
+        LineRendererObj.SetPosition(1, stop.Position);
+        LineRendererObj.material = material;
+    }
 
     public Line Clone(GameObject GameObjectParm)
     {
@@ -169,24 +180,34 @@ public class Line : MonoBehaviour
         return linclc[EquationABC.A] + "x + " + linclc[EquationABC.B] + "y + " + linclc[EquationABC.C];
     }
 
-    protected virtual void MakeLine(Point2D start, Point2D stop, Material material)
-    {
-        var go = new GameObject();
-        LineRendererObj = go.AddComponent<LineRenderer>();
-        LineRendererObj.name = ToString();
-        LineRendererObj.startWidth = .10f;
-        LineRendererObj.endWidth = .7f;
-        LineRendererObj.SetPosition(0, start.Position);
-        LineRendererObj.SetPosition(1, stop.Position);
-        LineRendererObj.material = material;
-    }
-
     public double Solve(double x)
     {
         var fun = lineEquation();
 
         return fun[EquationAB.A] * x + fun[EquationAB.B];
 
+    }
+
+    public double Length()
+    {
+        return Math.Sqrt((Math.Pow((tail.X - head.X), 2) + Math.Pow((tail.Y - tail.X), 2)));
+    }
+
+    public void Rotate(float angle)
+    {
+        B.rotate(angle);
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(A);
+        Destroy(B);
+        Destroy(LineRendererObj);
+    }
+    public void SetActivePoints(bool val)
+    {
+        A.SetActive(val);
+        B.SetActive(val);
     }
 
     private void Update()
@@ -205,15 +226,5 @@ public class Line : MonoBehaviour
                 LineRendererObj.name = ToString();
             }
         }
-    }
-
-    public double Length()
-    {
-        return Math.Sqrt((Math.Pow((tail.X - head.X), 2) + Math.Pow((tail.Y - tail.X), 2)));
-    }
-
-    public void Rotate(float angle)
-    {
-        B.rotate(angle);
     }
 }
