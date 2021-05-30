@@ -101,13 +101,14 @@ lab1/cone.mlp
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Unity
-unity/Library/*
-unity/[Tt]emp/
-unity/[Oo]bj/
-unity/[Bb]uild/
-unity/[Bb]uilds/
-unity/[Ll]ogs/
-unity/[Uu]ser[Ss]ettings/
-unity/.vs/
+UnityVisualisation/Library/*
+UnityVisualisation/[Tt]emp/
+UnityVisualisation/[Oo]bj/
+UnityVisualisation/[Bb]uild/
+UnityVisualisation/[Bb]uilds/
+UnityVisualisation/[Ll]ogs/
+UnityVisualisation/[Uu]ser[Ss]ettings/
+UnityVisualisation/.vs/
 
 © 2021 GitHub, Inc.
+

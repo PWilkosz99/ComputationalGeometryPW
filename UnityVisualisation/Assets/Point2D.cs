@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -100,10 +101,11 @@ public class Point2D : MonoBehaviour
         return Vector2.Angle(v1, v2); //I'm using the built-in unity function 
     }
 
+    public HashSet<VirtualTriangle> AdjacentTriangles { get; } = new HashSet<VirtualTriangle>();
 
     private void Update()
     { 
-        if(PointFromTemplate != null) // aktualizacja nazwy aby zawsze przedstawia³a wspó³rzêdne
+        if(PointFromTemplate != null) 
         {
             if(PointFromTemplate.name != ToString())
             {
