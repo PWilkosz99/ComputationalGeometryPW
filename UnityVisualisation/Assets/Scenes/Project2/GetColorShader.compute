@@ -1,0 +1,26 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma enable_d3d11_debug_symbols
+#pragma kernel CSMain
+
+RWTexture2D<float4> Color;
+RWStructuredBuffer<float3> Output;
+Texture2D<float4> Input;
+int Size;
+int Step;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x % Step != 0)
+        return;
+    
+    if (id.y % Step != 0)
+        return;
+    
+    float r = Input[id.xy].x;
+    float g = Input[id.xy].y;
+    float b = Input[id.xy].z;
+    
+    Color[id.xy] = float4(r, g, b, 1.0); //RGBA
+    Output[id.x * Size + id.y] = float3(id.x, id.y, r * g * b);;
+}

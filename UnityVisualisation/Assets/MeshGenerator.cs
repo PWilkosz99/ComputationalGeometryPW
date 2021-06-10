@@ -17,10 +17,15 @@ public class MeshGenerator : MonoBehaviour
             new Vector3 (0,0,0),
             new Vector3 (0,0,1),
             new Vector3 (1,0,0),
+            new Vector3 (2,0,0),
+            new Vector3 (1,3,0),
+            new Vector3 (7,0,0),
+            new Vector3 (1,9,0),
         };
         triangles = new int[]
         {
             0,1,2,
+            3,4,5
         };
     }
 

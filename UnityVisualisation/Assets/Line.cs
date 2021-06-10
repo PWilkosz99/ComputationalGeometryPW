@@ -41,8 +41,8 @@ public class Line : MonoBehaviour
         var go = new GameObject();
         LineRendererObj = go.AddComponent<LineRenderer>();
         LineRendererObj.name = ToString();
-        LineRendererObj.startWidth = .05f;
-        LineRendererObj.endWidth = .05f;
+        LineRendererObj.startWidth = 1f;
+        LineRendererObj.endWidth = 1f;
         LineRendererObj.SetPosition(0, start.Position);
         LineRendererObj.SetPosition(1, stop.Position);
         LineRendererObj.material = material;

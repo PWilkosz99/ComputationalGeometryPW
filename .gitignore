@@ -107,10 +107,9 @@ UnityVisualisation/[Oo]bj/
 UnityVisualisation/[Bb]uild/
 UnityVisualisation/[Bb]uilds/
 UnityVisualisation/[Ll]ogs/
-UnityVisualisation/[Uu]ser[Ss]ettings/
-UnityVisualisation/UserSettings/
+UnityVisualisation/[Uu]ser[Ss]ettings/*
 UnityVisualisation/.vs/
-UnityVisualisation/obj/
+UnityVisualisation/obj/*
 
 © 2021 GitHub, Inc.
 
